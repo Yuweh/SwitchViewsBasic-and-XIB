@@ -12,15 +12,32 @@ class ViewController: UIViewController {
 
     
     @IBOutlet weak var viewContainer: UIView!
-    var simpleView1: UIView!
-    var simpleView2: UIView!
+    
+    //Array set
+    var views: [UIView]!
+    
+// instead of creating seperate variables, an array was used to declare
+//    var simpleView1: UIView!
+//    var simpleView2: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        simpleView1 = SimpleVC1().view
-        simpleView2 = SimpleVC2().view
-        viewContainer.addSubview(simpleView1)
-        viewContainer.addSubview(simpleView2)
+        
+        views = [UIView]()
+        views.append(SimpleVC1().view)
+        views.append(SimpleVC2().view)
+      
+        for v in views {
+            viewContainer.addSubview(v)
+        }
+        
+        viewContainer.bringSubview(toFront: views[0])
+        
+//refactored
+//        simpleView1 = SimpleVC1().view
+//        simpleView2 = SimpleVC2().view
+//        viewContainer.addSubview(simpleView1)
+//        viewContainer.addSubview(simpleView2)
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,16 +46,22 @@ class ViewController: UIViewController {
     }
 
     @IBAction func switchViewAction(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            viewContainer.bringSubview(toFront: simpleView1)
-            break
-        case 1:
-            viewContainer.bringSubview(toFront: simpleView2)
-            break
-        default:
-            break
-        }
+        
+        //this one line of code replaced switch
+        self.viewContainer.bringSubview(toFront: views[sender.selectedSegmentIndex])
+        
+        
+//refactored
+//        switch sender.selectedSegmentIndex {
+//        case 0:
+//            viewContainer.bringSubview(toFront: simpleView1)
+//            break
+//        case 1:
+//            viewContainer.bringSubview(toFront: simpleView2)
+//            break
+//        default:
+//            break
+//        }
     }
     
 }
